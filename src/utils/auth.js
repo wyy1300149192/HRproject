@@ -1,7 +1,7 @@
 // 通过这个工具来持久化token
 import Cookies from 'js-cookie'
 
-const TokenKey = 'vue_admin_template_token'
+const TokenKey = 'hrsaas-ihrm-token'
 
 // 获取token
 export function getToken() {

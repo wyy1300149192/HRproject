@@ -24,6 +24,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
+
   publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
@@ -36,6 +37,17 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
+    },
+    // 里面新增
+    // before: require('./mock/mock-server.js'), // 注释线上地址
+    // 代理配置
+    proxy: {
+      // 这里的 api 表示如果我们的请求地址以 /api 开头的时候，就出触发代理机制
+      '/api': {
+        // 例如: axios请求的完整地址: /api/sys/login
+        target: 'http://ihrm.itheima.net', // 需要代理的地址  (拼接在你本来要请求的地址前: http://ihrm.itheima.net/api/sys/login
+        changeOrigin: true // 是否跨域，需要设置此值为 true 才可以让本地服务代理我们发出请求
+      }
     }
   },
   configureWebpack: {
@@ -77,7 +89,7 @@ module.exports = {
       })
       .end()
 
-    config.when(process.env.NODE_ENV !== 'development', (config) => {
+    config.when(process.env.NODE_ENV !== 'development', config => {
       config
         .plugin('ScriptExtHtmlWebpackPlugin')
         .after('html')
