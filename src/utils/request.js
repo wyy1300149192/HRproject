@@ -15,8 +15,6 @@ service.interceptors.request.use(
     // 判断token存在执行
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
-    } else {
-      router.replace('/login')
     }
     return config
   },
@@ -46,7 +44,7 @@ service.interceptors.response.use(
     if (error?.response?.data?.code === 10002) {
       store.commit('user/REMOVE_TOKEN')
       store.commit('user/RESET_STATE')
-      router.replace('/login')
+      router.replace(`/login?redirect=${encodeURIComponent(router.currentRoute.fullPath)}`)
     }
     return Promise.reject(error)
   }

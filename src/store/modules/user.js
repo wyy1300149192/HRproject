@@ -62,6 +62,12 @@ const actions = {
     } catch (err) {
       console.log(err)
     }
+  },
+
+  // 退出登录
+  logOut({ commit }) {
+    commit('REMOVE_TOKEN')
+    commit('RESET_STATE')
   }
 }
 

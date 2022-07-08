@@ -2,6 +2,7 @@ import router from './router'
 import store from './store'
 import Nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
+import getPageTitle from './utils/get-page-title'
 
 // 路由守卫白名单
 const whiteList = ['/login'] // no redirect whitelist
@@ -29,10 +30,13 @@ router.beforeEach(async(to, from, next) => {
     if (whiteList.includes(to.path)) {
       next()
       Nprogress.done()
+    } else {
+      next('/login')
     }
   }
 })
 
-router.afterEach(() => {
+router.afterEach((to) => {
+  document.title = getPageTitle(to.meta.title)
   Nprogress.done()
 })

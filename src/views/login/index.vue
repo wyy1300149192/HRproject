@@ -130,15 +130,27 @@ export default {
     },
     // 用了处理点击登陆按钮
     handleLogin() {
+      console.log(this.$route.query)
+      console.log(this.$route.query.redirect)
+      console.log(this.redirect)
+
       // 兜底校验
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
           // 登录请求
           try {
-            const res = await this.$store.dispatch('user/loginAPIActions', this.loginForm)
-            this.$router.push('/')
+            const res = await this.$store.dispatch(
+              'user/loginAPIActions',
+              this.loginForm
+            )
             console.log(res)
-          } catch (err) { console.log(err) }
+            console.log(this.$route.query)
+            console.log(this.$route.query.redirect)
+            console.log(this.redirect)
+            this.$router.replace(this.redirect || '/')
+          } catch (err) {
+            console.log(err)
+          }
         } else {
           return false
         }
